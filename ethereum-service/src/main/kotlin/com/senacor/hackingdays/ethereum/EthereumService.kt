@@ -1,20 +1,20 @@
 package com.senacor.hackingdays.ethereum
 
-import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.support.SendResult
 import org.springframework.stereotype.Service
-import org.springframework.util.concurrent.ListenableFuture
+import org.web3j.protocol.Web3j
+import org.web3j.protocol.http.HttpService
 
 /**
  *
  * @author jholtkamp
  */
 @Service
-class EthereumService(var kafka: KafkaTemplate<String, String>) {
+class EthereumService {
 
-    private val topic = "test5"
-
-    fun send(entity: Telemetry): ListenableFuture<SendResult<String, String>>? {
-        return kafka.send(topic, entity.serialize())
+    fun test() {
+        val web3 = Web3j.build(HttpService())
+        web3.web3ClientVersion().observable().subscribe { x ->
+            println(x.web3ClientVersion)
+        }
     }
 }

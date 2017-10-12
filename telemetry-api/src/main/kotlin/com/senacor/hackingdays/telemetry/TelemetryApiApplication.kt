@@ -1,11 +1,11 @@
-package com.senacor.hackingdays.sensorservice
+package com.senacor.hackingdays.telemetry
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class SensorServiceApplication
+class TelemetryApiApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(SensorServiceApplication::class.java, *args)
+    SpringApplication.run(TelemetryApiApplication::class.java, *args)
 }

@@ -1,5 +1,7 @@
-package com.senacor.hackingdays.sensorservice
+package com.senacor.hackingdays.telemetry
 
+import com.senacor.hackingdays.telemetry.Telemetry
+import com.senacor.hackingdays.telemetry.TelemetryEventService
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,21 +15,20 @@ import org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner::class)
 @SpringBootTest
-internal class SensorEventServiceTest {
+internal class TelemetryEventServiceTest {
 
     @Autowired
     private lateinit var kafka: KafkaTemplate<String, String>
 
-    lateinit var service: SensorEventService
+    lateinit var service: TelemetryEventService
 
     @Before
     internal fun setUp() {
-        service = SensorEventService(kafka)
+        service = TelemetryEventService(kafka)
     }
 
     @Test
     fun name() {
-        val data = SensorEntity(12345)
-        service.send(data)
+        service.send(Telemetry(12345))
     }
 }

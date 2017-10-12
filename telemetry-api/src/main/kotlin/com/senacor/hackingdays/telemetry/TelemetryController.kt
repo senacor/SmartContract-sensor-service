@@ -1,4 +1,4 @@
-package com.senacor.hackingdays.sensorservice
+package com.senacor.hackingdays.telemetry
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
  * @author jholtkamp
  */
 @RestController
-class SensorController(val service: SensorEventService) {
+class TelemetryController(val service: TelemetryEventService) {
 
     @PostMapping("/telemetries", consumes = arrayOf("application/json;charset=UTF-8"))
-    fun findByLastName(@RequestBody entity: SensorEntity): ResponseEntity<String> {
+    fun findByLastName(@RequestBody entity: Telemetry): ResponseEntity<String> {
         service.send(entity)
 
         return ResponseEntity.ok().build<String>()

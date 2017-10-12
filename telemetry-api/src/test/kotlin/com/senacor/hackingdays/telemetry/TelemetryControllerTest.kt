@@ -1,6 +1,5 @@
-package com.senacor.hackingdays.sensorservice
+package com.senacor.hackingdays.telemetry
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,15 +17,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @RunWith(SpringRunner::class)
 @WebMvcTest
-class SensorControllerTest {
+class TelemetryControllerTest {
 
     @Autowired
-    private lateinit var controller: SensorController
+    private lateinit var controller: TelemetryController
 
     private lateinit var mockMvc: MockMvc
 
     @MockBean
-    private lateinit var service: SensorEventService
+    private lateinit var service: TelemetryEventService
 
     @Before
     fun setUp() {
@@ -35,25 +34,27 @@ class SensorControllerTest {
 
     @Test
     fun `should return 415`() {
-        val data = SensorEntity(System.currentTimeMillis())
+        val data = Telemetry(System.currentTimeMillis())
 
-        mockMvc.perform(MockMvcRequestBuilders //
-                .post("/telemetries") //
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/telemetries")
                 .contentType(MediaType.APPLICATION_ATOM_XML)
-                .content(ObjectMapper().writeValueAsString(data))
-        ).andExpect(status().isUnsupportedMediaType)
+                .content(data.serialize())
+        ).andExpect(
+                status().isUnsupportedMediaType
+        )
     }
 
     @Test
     fun postData() {
-        val data = SensorEntity(timestamp = System.currentTimeMillis())
+        val data = Telemetry(System.currentTimeMillis())
 
         `when`(service.send(data)).thenReturn(Matchers.any())
 
-        mockMvc.perform(MockMvcRequestBuilders //
-                .post("/telemetries") //
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/telemetries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(ObjectMapper().writeValueAsString(data))
+                .content(data.serialize())
         ).andExpect(
                 status().isOk
         )
