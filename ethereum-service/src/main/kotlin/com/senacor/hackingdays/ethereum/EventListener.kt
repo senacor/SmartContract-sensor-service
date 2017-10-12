@@ -1,4 +1,4 @@
-package com.senacor.hackingdays.sensorservice
+package com.senacor.hackingdays.ethereum
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.context.annotation.Configuration
