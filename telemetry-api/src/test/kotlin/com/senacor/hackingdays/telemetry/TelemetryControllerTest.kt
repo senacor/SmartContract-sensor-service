@@ -1,5 +1,6 @@
 package com.senacor.hackingdays.telemetry
 
+import com.senacor.hackingdays.telemetry.TestData.getTestData
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +35,7 @@ class TelemetryControllerTest {
 
     @Test
     fun `should return 415`() {
-        val data = Telemetry(System.currentTimeMillis())
+        val data = Telemetry(System.currentTimeMillis().toFloat(), AccelerometerData(), SupersonicData())
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/telemetries")
@@ -47,16 +48,27 @@ class TelemetryControllerTest {
 
     @Test
     fun postData() {
-        val data = Telemetry(System.currentTimeMillis())
-
-        `when`(service.send(data)).thenReturn(Matchers.any())
+        `when`(service.send(getTestData())).thenReturn(Matchers.any())
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/telemetries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(data.serialize())
-        ).andExpect(
-                status().isOk
+                .content(getTestData().serialize())
         )
+                .andExpect(status().isOk)
+    }
+
+}
+
+object TestData {
+
+    fun getTestData(): Telemetry {
+        return Telemetry(1507826045.4362488f,
+                AccelerometerData(-3.3446997192382812f, -0.1197100830078125f, 8.702923034667968f),
+                SupersonicData(5.243897438049316f))
+    }
+
+    fun getTestDataString(): String {
+        return "{'accelerometer_data': [{'z': 8.702923034667968, 'x': -3.3446997192382812, 'y': -0.1197100830078125}], 'timestamp': 1507826045.4362488, 'ultrasonic_data': [{'distance': 5.243897438049316}]}"
     }
 }

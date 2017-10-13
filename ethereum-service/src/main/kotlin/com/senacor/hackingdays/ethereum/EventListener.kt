@@ -11,8 +11,8 @@ import org.springframework.kafka.annotation.KafkaListener
 @Configuration
 class EventListener {
 
-    @KafkaListener(topics = arrayOf("test5"))
-    fun listen(cr: ConsumerRecord<*, *>) {
+    @KafkaListener(topics = arrayOf("sensor-data-test"))
+    fun listen(cr: ConsumerRecord<String, String>) {
         println(cr)
         println()
     }

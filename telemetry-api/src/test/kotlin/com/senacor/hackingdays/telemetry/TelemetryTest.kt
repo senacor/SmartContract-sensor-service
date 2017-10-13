@@ -10,16 +10,17 @@ class TelemetryTest {
 
     @Test
     fun `test initialization`() {
-        val entity = Telemetry(System.currentTimeMillis())
+        val entity = Telemetry(System.currentTimeMillis().toFloat(), AccelerometerData(), SupersonicData())
 
         assertThat(entity.timestamp).isNotEqualTo(0)
-        assertThat(entity.x).isEqualTo(0.0f)
+        assertThat(entity.ultrasonic_data).isEqualTo(listOf(SupersonicData()))
     }
 
     @Test
     fun `test serialization`() {
-        val data = Telemetry(System.currentTimeMillis(), getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate())
+        val data = TestData.getTestData()
 
+        assertThat(data.serialize()).isNotEmpty()
         println(data.serialize())
     }
 

@@ -12,7 +12,7 @@ import org.springframework.util.concurrent.ListenableFuture
 @Service
 class TelemetryEventService(var kafka: KafkaTemplate<String, String>) {
 
-    private val topic = "test5"
+    private val topic = "sensor-data-test"
 
     fun send(entity: Telemetry): ListenableFuture<SendResult<String, String>>? {
         return kafka.send(topic, entity.serialize())
