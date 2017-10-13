@@ -27,7 +27,7 @@ internal class SmartContractTest {
         contract.greet()
     }
 
-    private fun credentials(): Credentials? {
+    private fun credentials(): Credentials {
         return WalletUtils.loadCredentials(
                 "test",
                 "/Users/jholtkamp/Library/Ethereum/rinkeby/keystore/UTC--2017-10-12T16-04-43.978476191Z--7e11511c14bec79e9f00d036206044387a38526f")
